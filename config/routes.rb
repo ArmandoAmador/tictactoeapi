@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  get '/login' => 'sessions#new'
-  post '/login' => 'sessions#create'
-  get '/logout' => 'sessions#destroy'
-  get '/signup' => 'users#new'
-
-  resources :users
+  resources :users, only: [:show, :create, :update, :destroy]
+  resources :games, only: [:show, :create]
 end

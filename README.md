@@ -8,6 +8,8 @@
  - Make it two player
  - Ability to play against the computer
 
+## User Curl Commands
+
 ### Creating a User
 
 ```
@@ -55,4 +57,34 @@ response
 ```
 curl --request DELETE --header "Content-Type: application/json" -d '{}' http://localhost:3000/users/1
 ```
+
+### Creating a Game
+
+```
+curl --request POST --header "Content-Type: application/json" -d '{
+  "game": {
+    "player_1_id": "1"
+  }
+}' http://localhost:3000/games
+```
+
+response
+```
+{"id":12,"status":"Game in Progress","board":{"grid":[["","",""],["","",""],["","",""]]},"player_1_id":1,"player_2_id":null,"created_at":"2015-10-15T22:56:03.412Z","updated_at":"2015-10-15T22:56:03.412Z"}
+```
+
+### Show a Game
+
+```
+curl --request GET --header "Content-Type: application/json" -d '{}' http://localhost:3000/games/1
+```
+
+response
+```
+{"id":1,"status":"Game in Progress","board":{"grid":[["","",""],["","",""],["","",""]]},"player_1_id":1,"player_2_id":2,"created_at":"2015-10-15T21:14:14.556Z","updated_at":"2015-10-15T21:14:14.556Z"}
+```
+
+
+
+
 
