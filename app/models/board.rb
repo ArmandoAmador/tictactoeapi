@@ -27,7 +27,7 @@ class Board
   private
 
   def default_grid
-    [['']*3]*3
+    Array.new(3) { Array.new(3) { '' } }
   end
 
   def tie?
