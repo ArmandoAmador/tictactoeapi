@@ -3,7 +3,6 @@
 ## webserver that allows a user to play tic tac toe by posting moves to the server as JSON.
 
 ## Todo List
- - Game
  - User authentication
  - Make it two player
  - Ability to play against the computer
@@ -84,7 +83,23 @@ response
 {"id":1,"status":"Game in Progress","board":{"grid":[["","",""],["","",""],["","",""]]},"player_1_id":1,"player_2_id":2,"created_at":"2015-10-15T21:14:14.556Z","updated_at":"2015-10-15T21:14:14.556Z"}
 ```
 
+### Updating a game
 
+```
+curl --request PATCH --header "Content-Type: application/json" -d '{
+  "game": {
+    "player_2_id": "12"
+  }
+}' http://localhost:3000/games/1
+```
 
+response
+```
+{"id":1,"status":"Game in Progress","board":{"grid":[["","",""],["","",""],["","",""]]},"player_1_id":1,"player_2_id":12,"created_at":"2015-10-15T21:14:14.556Z","updated_at":"2015-10-15T23:27:48.538Z"}
+```
 
+### Destroy a Game
 
+```
+curl --request DELETE --header "Content-Type: application/json" -d '{}' http://localhost:3000/games/1
+```

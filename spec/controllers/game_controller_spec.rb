@@ -55,4 +55,54 @@ RSpec.describe GamesController, type: :controller do
       it { is_expected.to respond_with 201 }
     end
   end
+
+  describe 'PUT/PATCH #update' do
+    before(:each) do
+      @game = FactoryGirl.create :game
+    end
+
+    context 'when is not updated' do
+      before(:each) do
+        patch :update, id: @game.id, game: {
+          player_1_id: ''
+        }
+      end
+
+      it 'renders an errors json' do
+        game_response = json_response
+        expect(game_response).to have_key(:errors)
+      end
+
+      it 'renders the json errors on why the game could not updated' do
+        game_response = json_response
+        expect(game_response[:errors][:player_1]).to include "can't be blank"
+      end
+
+      it { is_expected.to respond_with 422 }
+    end
+    context 'when it is successfully updated' do
+      before(:each) do
+        @player_2 = FactoryGirl.create(:user)
+        patch :update, {
+          id: @game.id,
+          game: {
+            player_2_id: @player_2.id }
+        }, format: :json
+      end
+
+      it 'renders the json response for the game record just updated' do
+        game_response = json_response
+        expect(game_response[:player_2_id]).to eql @player_2.id
+      end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    before(:each) do
+      @game = FactoryGirl.create :game
+      delete :destroy, id: @game
+    end
+
+    it { is_expected.to respond_with 204 }
+  end
 end
