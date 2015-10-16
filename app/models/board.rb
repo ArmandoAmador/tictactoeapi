@@ -1,10 +1,8 @@
 require 'array_core_extensions'
 
-class Board
-  attr_reader :grid
-  def initialize(input = {})
-    @grid = input.fetch(:grid, default_grid)
-  end
+class Board < ActiveRecord::Base
+  serialize :grid
+  before_create :default_grid
 
   def get_cell(x, y)
     grid[y][x]
@@ -13,6 +11,7 @@ class Board
   def set_cell(x, y, value)
     if get_cell(x, y).blank?
       grid[y][x] = value
+      save
     else
       'cannot overide cell value'
     end
@@ -27,7 +26,7 @@ class Board
   private
 
   def default_grid
-    Array.new(3) { Array.new(3) { '' } }
+    self.grid ||= Array.new(3) { Array.new(3) { '' } }
   end
 
   def tie?

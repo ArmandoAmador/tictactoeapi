@@ -1,14 +1,14 @@
 class Game < ActiveRecord::Base
   belongs_to :player_1, class_name: 'User'
   belongs_to :player_2, class_name: 'User'
+  belongs_to :board
 
   validates :player_1, presence: true
   validates :player_2, presence: true, allow_nil: true
   validates :board, presence: true
 
-  serialize :board
-  after_initialize :default_values
-  after_save :update_status
+  before_validation :default_values, on: :create
+  before_save :update_status
 
   delegate :set_cell, to: :board
   delegate :get_cell, to: :board
@@ -23,7 +23,9 @@ class Game < ActiveRecord::Base
   end
 
   def default_values
-    self.board = Board.new
+    board = Board.new
+    board.save
+    self.board = board
     self.status = board.status
   end
 

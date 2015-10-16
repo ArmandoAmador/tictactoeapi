@@ -8,7 +8,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     it 'returns the information about a user on a hash' do
-      user_response = json_response
+      user_response = json_response[:user]
       expect(user_response[:username]).to eql @user.username
     end
 
@@ -44,7 +44,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       it 'renders the json response for the user record just created' do
-        user_response = json_response
+        user_response = json_response[:user]
         expect(user_response[:username]).to eql @user_attributes[:username]
       end
 
@@ -78,13 +78,13 @@ RSpec.describe UsersController, type: :controller do
       before(:each) do
         patch :update, {
           id: @user.id,
-          user: { password: 'foozball' }
+          user: { username: 'johndoe' }
         }, format: :json
       end
 
       it 'renders the json response for the user record just updated' do
-        user_response = json_response
-        expect(user_response[:password]).to eql 'foozball'
+        user_response = json_response[:user]
+        expect(user_response[:username]).to eql 'johndoe'
       end
     end
   end

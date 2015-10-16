@@ -22,7 +22,7 @@ curl --request POST --header "Content-Type: application/json" -d '{
 ```
 
 ```
-{"id":1,"username":"johndoe","password":"foobarbaz","created_at":"2015-10-15T18:41:59.711Z","updated_at":"2015-10-15T18:41:59.711Z"}
+{"user":{"id":1,"username":"johndoe","created_at":"2015-10-16T15:17:27.657Z","updated_at":"2015-10-16T15:17:27.657Z"}}
 ```
 
 ### Show a User
@@ -33,7 +33,7 @@ curl --request GET --header "Content-Type: application/json" -d '{}' http://loca
 
 example response
 ```
-{"id":1,"username":"johndoe","password":"foobarbaz","created_at":"2015-10-15T18:41:59.711Z","updated_at":"2015-10-15T18:53:07.342Z"}
+{"user":{"id":1,"username":"johndoe","created_at":"2015-10-16T15:17:27.657Z","updated_at":"2015-10-16T15:17:27.657Z"}}
 ```
 
 
@@ -49,7 +49,7 @@ curl --request PATCH --header "Content-Type: application/json" -d '{
 
 example response
 ```
-{"id":1,"username":"henry","password":"foobarbaz","created_at":"2015-10-15T18:41:59.711Z","updated_at":"2015-10-15T18:53:07.342Z"}
+{"user":{"id":1,"username":"henry","created_at":"2015-10-16T15:17:27.657Z","updated_at":"2015-10-16T15:18:08.224Z"}
 ```
 
 ### Destroying a User
@@ -70,7 +70,7 @@ curl --request POST --header "Content-Type: application/json" -d '{
 
 example response
 ```
-{"id":12,"status":"Game in Progress","board":{"grid":[["","",""],["","",""],["","",""]]},"player_1_id":1,"player_2_id":null,"created_at":"2015-10-15T22:56:03.412Z","updated_at":"2015-10-15T22:56:03.412Z"}
+{"game":{"id":20,"status":"Game in Progress","board":[["","",""],["","",""],["","",""]],"player_1_id":1,"player_2_id":null}}
 ```
 
 ### Show a Game
@@ -81,22 +81,22 @@ curl --request GET --header "Content-Type: application/json" -d '{}' http://loca
 
 example response
 ```
-{"id":1,"status":"Game in Progress","board":{"grid":[["","",""],["","",""],["","",""]]},"player_1_id":1,"player_2_id":2,"created_at":"2015-10-15T21:14:14.556Z","updated_at":"2015-10-15T21:14:14.556Z"}
+{"game":{"id":1,"status":"Game in Progress","board":[["","",""],["","",""],["","",""]],"created_at":"2015-10-16T15:44:08.583Z","updated_at":"2015-10-16T15:44:08.583Z","player_1_id":1,"player_2_id":null}}
 ```
 
-### Updating a game
+### Updating/Joining a game
 
 ```
 curl --request PATCH --header "Content-Type: application/json" -d '{
   "game": {
-    "player_2_id": "12"
+    "player_2_id": "2"
   }
-}' http://localhost:3000/games/2
+}' http://localhost:3000/games/1
 ```
 
 example response
 ```
-{"id":1,"status":"Game in Progress","board":{"grid":[["","",""],["","",""],["","",""]]},"player_1_id":1,"player_2_id":12,"created_at":"2015-10-15T21:14:14.556Z","updated_at":"2015-10-15T23:27:48.538Z"}
+{"game":{"id":1,"status":"Game in Progress","board":[["","",""],["","",""],["","",""]],"created_at":"2015-10-16T15:44:08.583Z","updated_at":"2015-10-16T16:02:34.835Z","player_1_id":1,"player_2_id":2}}
 ```
 
 ### Destroy a Game
@@ -117,7 +117,7 @@ Choose a location where you want to post your move
 ```
 curl --request POST --header "Content-Type: application/json" -d '{
   "location": "1", "move": "x"
-}' http://localhost:3000/games/1/make_move
+}' http://localhost:3000/games/2/make_move
 ```
 
 | X | 2 | 3 |
@@ -127,6 +127,6 @@ curl --request POST --header "Content-Type: application/json" -d '{
 example response
 
 ```
-{"id":1,"status":"Game in Progress","board":{"grid":[["x","",""],["","",""],["","",""]]},"player_1_id":1,"player_2_id": 12,"created_at":"2015-10-16T03:18:26.772Z","updated_at":"2015-10-16T03:29:56.707Z"}
+{"game":{"id":1,"status":"Game in Progress","board":[["x","",""],["","",""],["","",""]],"created_at":"2015-10-16T16:06:40.925Z","updated_at":"2015-10-16T16:15:15.049Z","player_1_id":1,"player_2_id":null}}
 ```
 
