@@ -97,6 +97,45 @@ RSpec.describe GamesController, type: :controller do
     end
   end
 
+  describe 'PATCH/UPATE #make_move' do
+    before(:each) do
+      @game = FactoryGirl.create :game
+    end
+
+    context 'when is not updated' do
+      before(:each) do
+        patch :make_move, id: @game.id, move: 'x'
+      end
+
+      it 'renders an errors json' do
+        game_response = json_response
+        expect(game_response).to have_key(:errors)
+      end
+
+      it 'renders the json errors on why the game could not updated' do
+        game_response = json_response
+        expect(game_response[:errors]).to include(
+          'move and location are required'
+        )
+      end
+
+      it { is_expected.to respond_with 422 }
+    end
+
+    context 'when it is successfully updated' do
+      before(:each) do
+        patch :make_move, id: @game.id, move: 'x', location: '1', format: :json
+      end
+
+      it 'renders the json response for the game record just updated' do
+        game_response = json_response
+        expect(game_response[:board][:grid]).to eql(
+          [['x', '', ''], ['', '', ''], ['', '', '']]
+        )
+      end
+    end
+  end
+
   describe 'DELETE #destroy' do
     before(:each) do
       @game = FactoryGirl.create :game

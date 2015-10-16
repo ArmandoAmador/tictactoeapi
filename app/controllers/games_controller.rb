@@ -30,9 +30,24 @@ class GamesController < ApplicationController
     head 204
   end
 
+  def make_move
+    game = Game.find(params[:id])
+    return render json: { errors: 'move and location are required' }, status: 422 unless move_and_location?
+    game.play(params[:move].to_s, params[:location].to_s)
+    if game.save
+      render json: game, status: 201, location: [game]
+    else
+      render json: { errors: game.errors }, status: 422
+    end
+  end
+
   private
 
+  def move_and_location?
+    params[:move].present? && params[:location].present?
+  end
+
   def game_params
-    params.require(:game).permit(:player_1_id, :player_2_id)
+    params.require(:game).permit(:player_1_id, :player_2_id, :move, :location)
   end
 end

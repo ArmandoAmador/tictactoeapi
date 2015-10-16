@@ -31,6 +31,11 @@ class Game < ActiveRecord::Base
     self.status = board.status
   end
 
+  def play(move, location)
+    x, y = get_move(location)
+    board.set_cell(x, y, move)
+  end
+
   private
 
   def human_move_to_coordinate(human_move)
