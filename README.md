@@ -2,11 +2,11 @@
 
 ## webserver that allows a user to play tic tac toe by posting moves to the server as JSON.
 
-## Todo List
- - Fix persistence problem with Game and Board
- - User authentication
- - Make it two player
- - Ability to play against the computer
+## Get Started
+`git clone repo`
+`cd tictactoeapi`
+`rake db:migrate`
+`rails s`
 
 ## User Curl Commands
 
@@ -110,9 +110,23 @@ curl --request DELETE --header "Content-Type: application/json" -d '{}' http://l
 
 Choose a location where you want to post your move
 
-| 1 | 2 | 3 |
-| 4 | 5 | 6 |
-| 7 | 8 | 9 |
+<table>
+  <tr>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+  </tr>
+</table>
 
 ```
 curl --request POST --header "Content-Type: application/json" -d '{
@@ -120,9 +134,23 @@ curl --request POST --header "Content-Type: application/json" -d '{
 }' http://localhost:3000/games/2/make_move
 ```
 
-| X | 2 | 3 |
-| 4 | 5 | 6 |
-| 7 | 8 | 9 |
+<table>
+  <tr>
+    <td>X</td>
+    <td>2</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+  </tr>
+</table>
 
 example response
 
@@ -130,3 +158,9 @@ example response
 {"game":{"id":1,"status":"Game in Progress","board":[["x","",""],["","",""],["","",""]],"created_at":"2015-10-16T16:06:40.925Z","updated_at":"2015-10-16T16:15:15.049Z","player_1_id":1,"player_2_id":null}}
 ```
 
+## Todo List
+ - User authentication
+ - Make it two player
+ - Ability to switch players
+ - Showing which player has one
+ - Ability to play against the computer
