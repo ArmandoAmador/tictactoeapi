@@ -8,7 +8,7 @@ RSpec.describe GamesController, type: :controller do
     end
 
     it 'returns the information about a game on a hash' do
-      game_response = json_response
+      game_response = json_response[:game]
       expect(game_response[:status]).to eql @game.status
     end
 
@@ -48,7 +48,7 @@ RSpec.describe GamesController, type: :controller do
       end
 
       it 'renders the json response for the game record just created' do
-        game_response = json_response
+        game_response = json_response[:game]
         expect(game_response[:status]).to eql "Game in Progress"
       end
 
@@ -91,8 +91,10 @@ RSpec.describe GamesController, type: :controller do
       end
 
       it 'renders the json response for the game record just updated' do
-        game_response = json_response
-        expect(game_response[:player_2_id]).to eql @player_2.id
+        game_response = json_response[:game]
+        expect(game_response[:player_2][:username]).to eql(
+          @player_2.username
+        )
       end
     end
   end
@@ -128,8 +130,8 @@ RSpec.describe GamesController, type: :controller do
       end
 
       it 'renders the json response for the game record just updated' do
-        game_response = json_response
-        expect(game_response[:board][:grid]).to eql(
+        game_response = json_response[:game]
+        expect(game_response[:board]).to eql(
           [['x', '', ''], ['', '', ''], ['', '', '']]
         )
       end
